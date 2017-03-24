@@ -7,15 +7,21 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5",
-    "@kadira/storybook": "^2.21.0"
+    "@kadira/storybook": "^2.21.0",
+    "node-sass": "^4.5.1",
+    "npm-run-all": "^4.0.2",
+    "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-css": "node-sass src/styles/index.scss src/index.css",
+    "watch-css": "npm run build-css && node-sass src/styles/index.scss src/index.css --watch",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
+    "storybook-js": "start-storybook -p 9009 -s public",
+    "storybook": "npm-run-all -p watch-css storybook-js",
     "build-storybook": "build-storybook -s public"
   }
 }
